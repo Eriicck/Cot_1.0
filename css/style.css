@@ -1,0 +1,634 @@
+/* Reset básico y variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #005A9C; /* Azul OSDE principal */
+    --secondary-color: #00AEEF; /* Azul OSDE secundario */
+    --accent-color: #FDB913; /* Amarillo para CTAs */
+    --text-color: #333;
+    --light-gray: #f4f4f4;
+    --white: #fff;
+    --font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente similar a OSDE */
+    --border-radius: 4px;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white);
+    margin: 0;
+    
+}
+
+/* === Carrusel en Hero === */
+#hero {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+}
+
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--text-color); /* O var(--white) si el accent es oscuro */
+}
+.btn-primary:hover {
+    background-color: darken(var(--accent-color), 10%);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: darken(var(--secondary-color), 10%);
+}
+.btn-tertiary {
+    background-color: #ccc;
+    color: var(--text-color);
+}
+.btn-tertiary:hover {
+    background-color: #bbb;
+}
+
+
+/* Header */
+header {
+    background-color: var(--white);
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#logo {
+    max-height: 50px; /* Ajusta según tu logo */
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+}
+.nav-menu li {
+    margin-left: 25px;
+}
+.nav-menu li a {
+    font-weight: 500;
+}
+.nav-toggle {
+    display: none; /* Se muestra en mobile */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: var(--primary-color) url('../img/banner42.png') no-repeat center center/cover; /* CAMBIA img/banner-medico.jpg por tu imagen de banner */
+    color: var(--white);
+    padding: 80px 0;
+    text-align: center;
+}
+.hero-content h1 {
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Secciones Generales */
+.section-padding {
+    padding: 60px 0;
+}
+.bg-light {
+    background-color: var(--light-gray);
+}
+
+/* Especialidades */
+.especialidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.especialidad-card {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.especialidad-card img {
+    max-height: 60px;
+    margin: 0 auto 15px auto;
+}
+.especialidad-card h3 {
+    color: var(--secondary-color);
+}
+
+/* Profesionales */
+.profesionales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+.profesional-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+}
+.profesional-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 15px auto;
+    border: 3px solid var(--secondary-color);
+}
+.profesional-card .bio {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+
+/* TÍTULO DEL FORMULARIO */
+form#form-turno h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* LABELS */
+form#form-turno label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+}
+
+/* CAMPOS DE ENTRADA Y SELECT */
+form#form-turno input[type="text"],
+form#form-turno input[type="email"],
+form#form-turno input[type="tel"],
+form#form-turno input[type="date"],
+form#form-turno input[type="time"],
+form#form-turno select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1.8px solid #ccd6f6;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+form#form-turno input:focus,
+form#form-turno select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+}
+
+/* BOTÓN DE ENVÍO */
+form#form-turno button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#form-turno button[type="submit"]:hover {
+  background-color: #2563eb;
+}
+
+/* MENSAJES DE ERROR O INFO */
+.error-message {
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+  form#form-turno {
+    padding: 20px;
+  }
+
+  form#form-turno h2 {
+    font-size: 20px;
+  }
+}
+
+
+/* Formulario de Turnos
+#form-turnos {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+}
+.form-group select[disabled] {
+    background-color: #e9ecef;
+    opacity: 0.7;
+} */
+
+
+#mensaje-turno {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: var(--border-radius);
+}
+
+
+/* Ubicación / Mapa */
+#mapa {
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-gray);
+    padding: 40px 0 20px 0;
+}
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.footer-col h4 {
+    color: var(--white);
+    margin-bottom: 15px;
+    position: relative;
+}
+.footer-col h4::after { /* Pequeño subrayado decorativo */
+    content: '';
+    width: 50px;
+    height: 2px;
+    background-color: var(--secondary-color);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+.footer-col p, .footer-col ul li {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+.footer-col ul {
+    list-style: none;
+}
+.footer-col a {
+    color: var(--light-gray);
+}
+.footer-col a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+.logo-footer {
+    max-height: 40px;
+    margin-top: 10px;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; /* Logo arriba, menú abajo */
+    }
+    .logo-container { /* Para centrar el logo */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+    .nav-menu {
+        display: none; /* Oculto por defecto */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: var(--white); /* Fondo para el menú desplegable */
+        position: absolute;
+        top: 80px; /* Ajusta según altura del header */
+        left: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .nav-menu.active {
+        display: flex; /* Se muestra con JS */
+    }
+    .nav-menu li {
+        margin: 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-menu li a {
+        display: block;
+        padding: 15px;
+    }
+    .nav-toggle {
+        display: block; /* Mostrar botón hamburguesa */
+        position: absolute; /* Para posicionarlo si el logo no está centrado */
+        top: 25px; /* Ajusta según tu diseño */
+        right: 20px; /* Ajusta según tu diseño */
+    }
+
+    .hero-banner { padding: 60px 0; }
+    .hero-content h1 { font-size: 2rem; }
+
+    .footer-container {
+        grid-template-columns: 1fr; /* Columnas apiladas en mobile */
+        text-align: center;
+    }
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+
+
+
+
+/* === Estilos Personalizados para Flatpickr === */
+
+/* Contenedor principal del calendario */
+.flatpickr-calendar {
+    background: var(--white, #fff);
+    border: 1px solid #e0e0e0; /* Un borde sutil */
+    border-radius: var(--border-radius, 4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Una sombra un poco más pronunciada */
+    font-family: var(--font-primary, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+    width: auto; /* O puedes fijar un ancho, ej: 300px */
+    /* Flatpickr suele manejar bien el z-index, pero si tienes problemas: */
+    /* z-index: 9999 !important;  */
+}
+
+/* Encabezado del mes (donde está el nombre del mes y las flechas) */
+.flatpickr-months .flatpickr-month {
+    background: var(--primary-color, #005A9C); /* Tu color primario */
+    color: var(--white, #fff);
+    fill: var(--white, #fff); /* Color de las flechas SVG */
+    height: 48px; /* Un poco más de altura */
+    line-height: 48px;
+}
+
+/* Flechas de navegación de mes */
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    height: 48px;
+    width: 48px;
+    padding: 12px; /* Aumentar el área de clic */
+    top: 0;
+}
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    fill: var(--accent-color, #FDB913); /* Tu color de acento al pasar el mouse */
+}
+
+/* Selectores de mes y año (si están habilitados) */
+.flatpickr-current-month input.cur-year {
+    color: var(--white, #fff);
+    font-weight: bold;
+}
+.flatpickr-current-month .numInputWrapper span:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Encabezado de los días de la semana (Lun, Mar, Mie...) */
+.flatpickr-weekdays {
+    background: var(--primary-color, #005A9C);
+    /* Un tono ligeramente más claro que el encabezado del mes, o el mismo */
+    /* background: color-mix(in srgb, var(--primary-color, #005A9C) 90%, white); */
+    height: 36px;
+    line-height: 36px;
+}
+.flatpickr-weekday {
+    color: rgba(255, 255, 255, 0.85); /* Texto de los días un poco menos opaco */
+    font-weight: 600; /* Un poco más de peso */
+    font-size: 0.85em;
+    text-transform: uppercase; /* Opcional: MAYÚSCULAS */
+}
+
+/* Contenedor de los días del mes */
+.flatpickr-days {
+    padding-top: 5px; /* Pequeño espacio arriba */
+}
+
+/* Estilo general de cada día */
+.flatpickr-day {
+    color: var(--text-color, #333);
+    font-weight: 400;
+    max-width: 38px; /* Para mantenerlos cuadrados */
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid transparent; /* Borde transparente para mantener el layout en hover/selected */
+    margin: 1px; /* Pequeño margen entre días */
+    
+    
+    border-radius: 50%; 
+}
+.flatpickr-day:hover {
+    background: var(--light-gray, #f4f4f4);
+    border-color: var(--light-gray, #f4f4f4);
+    color: var(--primary-color, #005A9C);
+}
+
+/* Día de Hoy */
+.flatpickr-day.today {
+    border-color: var(--secondary-color, #00AEEF); /* Borde con tu color secundario */
+    color: var(--secondary-color, #00AEEF);
+    font-weight: 600; /* Resaltar un poco */
+}
+.flatpickr-day.today:hover {
+    background: var(--secondary-color, #00AEEF);
+    border-color: var(--secondary-color, #00AEEF);
+    color: var(--white, #fff);
+}
+
+/* Día Seleccionado */
+.flatpickr-day.selected,
+.flatpickr-day.selected:focus, /* :focus es importante para accesibilidad */
+.flatpickr-day.selected:hover {
+    background: var(--accent-color, #FDB913); /* Tu color de acento */
+    border-color: var(--accent-color, #FDB913);
+    color: var(--text-color, #333); /* O blanco si el acento es oscuro */
+    /* color: var(--white, #fff); */
+    font-weight: 600;
+}
+
+/* Días fuera del mes actual (prevMonthDay, nextMonthDay) */
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+    color: rgba(51, 51, 51, 0.4); /* Más tenues */
+    background: transparent;
+}
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover {
+    background: #e9e9e9;
+    color: rgba(51, 51, 51, 0.7);
+}
+
+/* Días deshabilitados */
+.flatpickr-day.disabled,
+.flatpickr-day.disabled:hover {
+    background: transparent !important;
+    color: rgba(51, 51, 51, 0.25) !important; /* Muy tenues */
+    cursor: default !important;
+    border-color: transparent !important;
+}
+
+/* Estilo para el input visible que crea Flatpickr (altInput) */
+/* Esto asegura que se vea como tus otros inputs del formulario */
+.form-group input.flatpickr-input[type="text"][readonly] { /* Flatpickr añade 'readonly' al altInput */
+    background-color: var(--white, #fff); /* Fondo blanco como un input normal */
+    cursor: pointer; /* Indica que es clicable */
+    /* Hereda los estilos de tus inputs generales definidos en:
+       form#form-turno input[type="text"] ...
+       Si no los hereda bien, puedes copiarlos aquí también.
+    */
+}
+
+/* Estilo cuando el altInput está deshabilitado */
+.form-group input.flatpickr-input[type="text"][readonly]:disabled {
+    background-color: #e9ecef; /* Color de fondo para inputs deshabilitados */
+    opacity: 0.7; /* Opacidad para indicar deshabilitado */
+    cursor: not-allowed;
+}
+
+/* Si tienes estilos para los días marcados con disponibilidad (opcional, de una implementación anterior) */
+/* Si no los estás usando actualmente, puedes omitir estas clases */
+.flatpickr-day.dia-disponible-parcial {
+    background-color: #fff3cd !important;
+    border-color: #ffeeba !important;
+    color: #856404 !important;
+}
+.flatpickr-day.dia-disponible-parcial:hover {
+    background-color: #ffeeba !important;
+}
+
+.flatpickr-day.dia-disponible-total {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+.flatpickr-day.dia-disponible-total:hover {
+    background-color: #c3e6cb !important;
+}
+
+.flatpickr-day.dia-completo {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+    text-decoration: line-through;
+    /* pointer-events: none;  // Ya no es necesario si se usa la clase .disabled de Flatpickr */
+}
+.flatpickr-day.dia-completo:hover {
+    background-color: #f5c6cb !important;
+}
+
+
+

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultorios Médicos - Traumatología, Pediatría y Neurocirugua</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome para iconos (opcional, pero recomendado) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Leaflet CSS para el mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- **NUEVO: Flatpickr CSS** -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <!-- CAMBIA ESTO por la ruta a tu logo -->
+                <img src="img/logo/logofinal1.png" alt="Logo Consultorios Médicos" id="logo">
+            </div>
+            <nav>
+                <button class="nav-toggle" aria-label="Abrir menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#especialidades">Especialidades</a></li>
+                    <li><a href="#profesionales">Nuestros Profesionales</a></li>
+                    <li><a href="#turnos">Solicitar Turno</a></li>
+                    <li><a href="#ubicacion">Ubicación</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-banner">
+            <div class="container hero-content">
+                <h1>Cuidado experto para toda la familia</h1>
+                <p>Accede a nuestros especialistas en Traumatología, Pediatría y Neurología.</p>
+                <a href="#turnos" class="btn btn-primary">Solicitar Turno Online</a>
+            </div>
+        </section>
+
+        <section id="especialidades" class="section-padding">
+            <div class="container">
+                <h2>Nuestras Especialidades</h2>
+                <div class="especialidades-grid">
+                    <div class="especialidad-card" data-especialidad="traumatologia">
+                        <!-- CAMBIA ESTO por la ruta a tu icono -->
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f9b4.svg" alt="Icono Traumatología">
+                        <h3>Traumatología</h3>
+                        <p>Atención integral de lesiones musculoesqueléticas y articulares.</p>
+                        <button class="btn btn-secondary btn-ver-profesionales">Ver Profesionales</button>
+                    </div>
+                    <div class="especialidad-card" data-especialidad="pediatria">
+                        <!-- CAMBIA ESTO por la ruta a tu icono -->
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f476.svg" alt="Icono Pediatría">
+                        <h3>Pediatría</h3>
+                        <p>Cuidado de la salud de niños y adolescentes, desde el nacimiento.</p>
+                        <button class="btn btn-secondary btn-ver-profesionales">Ver Profesionales</button>
+                    </div>
+                    <div class="especialidad-card" data-especialidad="neurologia">
+                        <!-- CAMBIA ESTO por la ruta a tu icono -->
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f9e0.svg" alt="Icono Neurología">
+                        <h3>Neurocirugia</h3>
+                        <p>Diagnóstico y tratamiento de enfermedades del sistema nervioso.</p>
+                        <button class="btn btn-secondary btn-ver-profesionales">Ver Profesionales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profesionales" class="section-padding bg-light" style="display:none;">
+            <div class="container">
+                <h2>Nuestros Profesionales <span id="nombre-especialidad-seleccionada"></span></h2>
+                <div id="lista-profesionales" class="profesionales-grid">
+                    <!-- Aquí se cargarán los profesionales con JS -->
+                </div>
+                <button id="btn-cerrar-profesionales" class="btn btn-tertiary">Cerrar</button>
+            </div>
+        </section>
+
+        <section id="turnos" class="section-padding">
+            <div class="container">
+                <h2>Solicita tu Turno</h2>
+                <form id="form-turno">
+                    <div class="form-group">
+                        <label for="especialidad-turno">Especialidad:</label>
+                        <select id="especialidad-turno" name="especialidad_id" required>
+                            <option value="">Seleccione una especialidad</option>
+                            <!-- Opciones pobladas por main.js o hardcodeadas -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor-turno">Especialista:</label>
+                        <select id="doctor-turno" name="doctor_id" required disabled>
+                            <option value="">Seleccione un Especialista</option>
+                            <!-- Opciones pobladas por main.js o según especialidad -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-turno">Fecha:</label>
+                        <!-- Este input será mejorado por Flatpickr -->
+                        <!-- Puedes dejarlo como type="date" o cambiarlo a type="text" -->
+                        <input type="text" id="fecha-turno" name="fecha" placeholder="Seleccione una fecha" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora-turno">Hora:</label>
+                        <select id="hora-turno" name="hora" required disabled>
+                            <option value="">Seleccione una hora</option>
+                        </select>
+                        <!-- O si usas botones para las horas: -->
+                        <!-- <div id="contenedor-horas" class="contenedor-horas-custom">
+                            <p class="mensaje-horas">Seleccione fecha y doctor.</p>
+                        </div>
+                        <input type="hidden" id="hora-seleccionada-hidden" name="hora"> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre-paciente">Nombre Completo:</label>
+                        <input type="text" id="nombre-paciente" name="nombre_paciente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dni-paciente">DNI:</label>
+                        <input type="text" id="dni-paciente" name="dni_paciente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-paciente">Email:</label>
+                        <input type="email" id="email-paciente" name="email_paciente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono-paciente">Teléfono:</label>
+                        <input type="tel" id="telefono-paciente" name="telefono_paciente">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirmar Turno</button>
+                </form>
+                <div id="mensaje-turno" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+
+        
+
+        <section id="ubicacion" class="section-padding">
+            <div class="container">
+                <h2>Nuestra Ubicación</h2>
+                <div id="mapa" style="height: 400px; width: 100%;"></div>
+                <p>Dirección: Uruguay 123, Moreno, Buenos Aires. (Actualiza esta dirección)</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-col">
+                <h4>Consultorios Médicos</h4>
+                <p>Comprometidos con tu salud y bienestar.</p>
+                <!-- CAMBIA ESTO por la ruta a tu logo de footer si tienes uno diferente -->
+                <img src="img/logo/logofinal1.png" alt="Logo Footer" class="logo-footer">
+            </div>
+            <div class="footer-col">
+                <h4>Contacto Rápido</h4>
+                <p><i class="fas fa-phone"></i> <a href="tel:+541100000000">(011) 0000-0000</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:turnos@consultorio.com.ar">turnos@consultorio.com.ar</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Urugay 123 Moreno Buenos Aires.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Útiles</h4>
+                <ul>
+                    <li><a href="#especialidades">Especialidades</a></li>
+                    <li><a href="#turnos">Solicitar Turno</a></li>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Políticas de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Trabaja con Nosotros</h4>
+                <p>Si eres un profesional de la salud y quieres unirte a nuestro equipo, envíanos tu CV.</p>
+                <a href="mailto:rrhh@consultorio.com.ar?subject=CV%20Profesional" class="btn btn-secondary">Enviar CV</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="currentYear"></span> Consultorios Médicos. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<!-- Librerías Externas PRIMERO -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
+<!-- Tus Scripts DESPUÉS -->
+<script src="js/main.js"></script>    <!-- Correcto, apunta a js/main.js -->
+<script src="scripts.js"></script>    <!-- Correcto, apunta a scripts.js en la raíz -->
+    
+
+
+
+</body>
+</html>
