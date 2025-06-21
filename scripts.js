@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- IDs de Elementos del DOM ---
     const formTurno = document.getElementById('form-turno');
+    const obraSocialSelect = document.getElementById('obra-social-turno'); // Nuevo
     const especialidadSelect = document.getElementById('especialidad-turno');
     const doctorSelect = document.getElementById('doctor-turno');
     const fechaInput = document.getElementById('fecha-turno'); // Input para Flatpickr
@@ -19,6 +20,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let flatpickrInstance = null; // Para mantener la instancia de Flatpickr
 
+    // --- Días Feriados (para deshabilitar en el calendario) ---
+    // Formato: 'YYYY-MM-DD'
+    const HOLIDAYS = [
+        '2025-01-01', // Año Nuevo
+        '2025-03-24', // Día Nacional de la Memoria por la Verdad y la Justicia
+        '2025-04-02', // Día del Veterano y de los Caídos en la Guerra de Malvinas
+        '2025-04-18', // Viernes Santo (variable) - Ajustar anualmente
+        '2025-05-01', // Día del Trabajador
+        '2025-05-25', // Día de la Revolución de Mayo
+        '2025-06-17', // Paso a la Inmortalidad del Gral. Don Martín Güemes
+        '2025-06-20', // Paso a la Inmortalidad del Gral. Manuel Belgrano
+        '2025-07-09', // Día de la Independencia
+        '2025-08-18', // Paso a la Inmortalidad del Gral. José de San Martín (feriado trasladable)
+        '2025-10-13', // Día del Respeto a la Diversidad Cultural (feriado trasladable)
+        '2025-11-20', // Día de la Soberanía Nacional
+        '2025-12-08', // Inmaculada Concepción de María
+        '2025-12-25'  // Navidad
+        // Agrega aquí los feriados para años futuros según sea necesario.
+    ];
+
+    // Función para deshabilitar sábados, domingos y feriados
+    const disableWeekendsAndHolidays = (date) => {
+        const day = date.getDay();
+        // Deshabilitar sábados (6) y domingos (0)
+        if (day === 0 || day === 6) {
+            return true;
+        }
+        // Deshabilitar feriados
+        const dateString = flatpickr.formatDate(date, "Y-m-d");
+        return HOLIDAYS.includes(dateString);
+    };
+
+
     // --- INICIALIZACIÓN DE FLATPICKR PARA EL CAMPO DE FECHA ---
     if (fechaInput) {
         console.log("[scripts.js] Input original ANTES de Flatpickr:", fechaInput.outerHTML);
@@ -30,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             minDate: "today",           // No permitir fechas pasadas
             disableMobile: "true",      // Opcional: usa Flatpickr en móviles en lugar del nativo
             clickOpens: true,           // Asegurar que se abra al hacer clic (default)
+            disable: [disableWeekendsAndHolidays], // Aplica la función de deshabilitar
 
             onOpen: function(selectedDates, dateStr, instance) {
                 console.log("[scripts.js] Flatpickr onOpen - Calendario abierto.");
@@ -208,6 +243,27 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             console.log("[scripts.js] Intento de envío de formulario.");
 
+            const selectedObraSocialOption = obraSocialSelect ? obraSocialSelect.options[obraSocialSelect.selectedIndex] : null;
+            const obraSocial = selectedObraSocialOption ? selectedObraSocialOption.value : '';
+            const redirectUrl = selectedObraSocialOption ? selectedObraSocialOption.dataset.redirectUrl : null;
+
+            // Manejar la redirección de OSDE
+            if (obraSocial === 'OSDE' && redirectUrl) {
+                // Si el usuario selecciona OSDE, redirigir directamente
+                // No es necesario validar otros campos si la intención es solo redirigir
+                mensajeTurnoDiv.textContent = 'Redirigiendo a la cartilla de OSDE...';
+                mensajeTurnoDiv.className = 'info';
+                // Usar un pequeño delay antes de redirigir para que el mensaje sea visible
+                setTimeout(() => {
+                    window.open(redirectUrl, '_blank'); // Abre en una nueva pestaña
+                    mensajeTurnoDiv.textContent = 'Redirección completada.';
+                    mensajeTurnoDiv.className = 'success';
+                    formTurno.reset(); // Limpia el formulario después de la redirección
+                }, 1000);
+                return; // Detener el proceso de envío del formulario aquí
+            }
+
+            // Continuar con la lógica normal si no es OSDE
             const nombreDoctorSeleccionado = doctorSelect ? doctorSelect.value : ''; // main.js pone el NOMBRE aquí
             const nombreEspecialidadSeleccionada = especialidadSelect ? (especialidadSelect.options[especialidadSelect.selectedIndex]?.text || especialidadSelect.value) : '';
 
@@ -220,13 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombrePaciente: nombrePacienteInput.value.trim(),
                 dniPaciente: dniPacienteInput.value.trim(),
                 emailPaciente: emailPacienteInput.value.trim(),
-                telefonoPaciente: telefonoPacienteInput.value.trim()
+                telefonoPaciente: telefonoPacienteInput.value.trim(),
+                obraSocial: obraSocial // Añadir la obra social aquí
             };
             console.log("[scripts.js] Datos a enviar para la reserva:", datosTurno);
 
-            if (!datosTurno.doctor || !datosTurno.fecha || !datosTurno.hora ||
-                !datosTurno.nombrePaciente || !datosTurno.dniPaciente || !datosTurno.emailPaciente || !datosTurno.especialidad) {
-                mensajeTurnoDiv.textContent = 'Por favor, complete todos los campos obligatorios (Especialidad, Doctor, Fecha, Hora, Nombre, DNI, Email).';
+            if (!datosTurno.especialidad || !datosTurno.doctor || !datosTurno.fecha || !datosTurno.hora ||
+                !datosTurno.nombrePaciente || !datosTurno.dniPaciente || !datosTurno.emailPaciente || !datosTurno.obraSocial) {
+                mensajeTurnoDiv.textContent = 'Por favor, complete todos los campos obligatorios (Obra Social, Especialidad, Doctor, Fecha, Hora, Nombre, DNI, Email).';
                 mensajeTurnoDiv.className = 'error';
                 console.warn("[scripts.js] Validación de formulario fallida:", datosTurno);
                 return;
@@ -251,6 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formTurno.reset();
                     if (flatpickrInstance) flatpickrInstance.clear();
                     
+                    if (obraSocialSelect) obraSocialSelect.value = ""; // Resetear Obra Social
                     if (especialidadSelect) especialidadSelect.value = "";
                     if (doctorSelect) {
                         while (doctorSelect.options.length > 1) { doctorSelect.remove(1); }
